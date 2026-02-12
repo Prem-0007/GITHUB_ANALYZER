@@ -1,5 +1,6 @@
 export default async function handler(req, res) {
   const { username } = req.query;
+console.log("Fetching GitHub API for", username); 
   const token = process.env.GITHUB_TOKEN;
 
   if (!username) {
