@@ -14,14 +14,24 @@ body {
 
 .container {
   width: 85%;
+  max-width: 600px;
   margin: auto;
   margin-top: 40px;
   position: relative;
 }
 
+.search-box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
 .search-box input {
   padding: 12px;
   width: 250px;
+  max-width: 100%;
   border: none;
   border-radius: 20px;
   background: #e8e8e8;
@@ -31,7 +41,6 @@ body {
 
 .search-box button {
   padding: 12px 18px;
-  margin-left: 10px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -90,17 +99,19 @@ body.dark .repo-card a {
 .error {
   color: red;
   font-weight: 600;
-}@media (max-width: 480px) {
+}
+
+@media (max-width: 480px) {
   .heading {
     font-size: 1.5rem;
   }
 
   .search-box input {
-    width: 100%; /* Full width on mobile */
+    width: 100%;
   }
 
   .search-box button {
-    width: 100%; /* Full width under input */
+    width: 100%;
   }
 
   .profile-card, .repo-card {
