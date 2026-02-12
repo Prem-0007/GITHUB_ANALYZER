@@ -9,7 +9,6 @@ window.onload = function () {
 
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
-
   if (document.body.classList.contains("dark")) {
     themeBtn.textContent = "☀️";
     localStorage.setItem("theme", "dark");
@@ -34,8 +33,7 @@ async function getProfile() {
 
   try {
     showLoading();
-
-    const res = await fetch(`/api/github/${username}`);
+    const res = await fetch(`/api/github?username=${username}`);
     const data = await res.json();
 
     if (!res.ok) {
@@ -45,8 +43,7 @@ async function getProfile() {
 
     displayProfile(data.profile);
     displayRepos(data.repos);
-
-  } catch (error) {
+  } catch {
     showError("Network error.");
   }
 }
@@ -66,33 +63,22 @@ function displayProfile(user) {
 
 function displayRepos(repos) {
   const reposDiv = document.getElementById("repos");
-
-  repos
-    .sort((a, b) => b.stargazers_count - a.stargazers_count)
-    .forEach(repo => {
-      reposDiv.innerHTML += `
-        <div class="repo-card">
-          <h3>${repo.name}</h3>
-          <p>${repo.description || "No description"}</p>
-          ⭐ ${repo.stargazers_count} | ${repo.language || "No language"} <br>
-          <a href="${repo.html_url}" target="_blank">View Repository</a>
-        </div>
-      `;
-    });
+  repos.sort((a, b) => b.stargazers_count - a.stargazers_count).forEach(repo => {
+    reposDiv.innerHTML += `
+      <div class="repo-card">
+        <h3>${repo.name}</h3>
+        <p>${repo.description || "No description"}</p>
+        ⭐ ${repo.stargazers_count} | ${repo.language || "No language"} <br>
+        <a href="${repo.html_url}" target="_blank">View Repository</a>
+      </div>
+    `;
+  });
 }
 
 function showError(message) {
-  document.getElementById("profile").innerHTML = `
-    <div class="profile-card error">
-      ${message}
-    </div>
-  `;
+  document.getElementById("profile").innerHTML = `<div class="profile-card error">${message}</div>`;
 }
 
 function showLoading() {
-  document.getElementById("profile").innerHTML = `
-    <div class="profile-card">
-      Loading...
-    </div>
-  `;
+  document.getElementById("profile").innerHTML = `<div class="profile-card">Loading...</div>`;
 }
