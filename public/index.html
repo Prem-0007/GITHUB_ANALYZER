@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GitHub Profile Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1 class="heading">GitHub Profile Analyzer</h1>
+
+<div class="container">
+
+<button class="dark-toggle" onclick="toggleDarkMode()" id="themeBtn">🌙</button>
+
+<div class="search-box">
+<input type="text" id="username" placeholder="Enter GitHub Username">
+<button onclick="getProfile()">Search</button>
+</div>
+
+<div id="profile"></div>
+<div id="repos"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
