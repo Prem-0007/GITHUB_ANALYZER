@@ -1,29 +1,37 @@
+import fetch from "node-fetch";
+
 export default async function handler(req, res) {
   const { username } = req.query;
-console.log("Fetching GitHub API for", username); 
+
+  if (!username) return res.status(400).json({ error: "Username is required" });
+
   const token = process.env.GITHUB_TOKEN;
 
-  if (!username) {
-    return res.status(400).json({ error: "Username is required" });
-  }
+  console.log("Fetching GitHub API for", username);
 
   try {
-    const response = await fetch(
-      `https://api.github.com/users/${username}/repos`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "User-Agent": "MyApp",
-          Accept: "application/vnd.github+json",
-          "X-GitHub-Api-Version": "2022-11-28"
-        }
+    const profileRes = await fetch(`https://api.github.com/users/${username}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "User-Agent": "GitHubAnalyzer",
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
       }
-    );
+    });
+    const profile = await profileRes.json();
 
-    const data = await response.json();
-    return res.status(response.status).json(data);
+    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "User-Agent": "GitHubAnalyzer",
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      }
+    });
+    const repos = await reposRes.json();
 
-  } catch (error) {
+    return res.status(200).json({ profile, repos });
+  } catch {
     return res.status(500).json({ error: "Failed to fetch GitHub data" });
   }
 }
