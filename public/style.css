@@ -90,4 +90,25 @@ body.dark .repo-card a {
 .error {
   color: red;
   font-weight: 600;
+}@media (max-width: 480px) {
+  .heading {
+    font-size: 1.5rem;
+  }
+
+  .search-box input {
+    width: 100%; /* Full width on mobile */
+  }
+
+  .search-box button {
+    width: 100%; /* Full width under input */
+  }
+
+  .profile-card, .repo-card {
+    padding: 15px;
+  }
+
+  .dark-toggle {
+    top: -35px;
+    padding: 6px 12px;
+  }
 }
